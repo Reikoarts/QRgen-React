@@ -1,7 +1,20 @@
-/* reset css */
-* {
+@font-face {
+  font-family: "Futura W01 Medium";
+  src: url("/fonts/FuturaMedium.otf") format("truetype");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 20px;
+}
+
+body {
+  font-family: 'Futura W01 Medium', sans-serif;
 }
