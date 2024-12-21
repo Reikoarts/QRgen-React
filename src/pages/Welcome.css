@@ -133,7 +133,13 @@
     padding: 15px;
     margin-top: 5px;
     margin-bottom: 20px;
-    width: 40%;
+    width: 25%;
+}
+
+@media (max-width: 640px) {
+    .quote {
+        width: auto;
+    }
 }
 
 /* Foreign Languages */
@@ -173,6 +179,8 @@
     margin: 0 auto; /* Centrage horizontal du texte */
     max-width: 75%; /* Limite la largeur du texte */
 }
+
+
 
 
 /* Pied de page */

@@ -3,13 +3,13 @@ import "./Welcome.css";
 import { Link } from 'react-router-dom';
 
 import Logo from "../components/Logo.jsx";
-import HeaderSection from "../components/HeaderSection.jsx";
+import HeaderSection from "../components/home/HeaderSection.jsx";
 import DropdownMenu from "../components/DropdownMenu.jsx";
 import TitleWithCurves from "../components/TitleWithCurves.jsx";
-import FeatureItem from "../components/FeatureItem.jsx";
-import BenefitsItem from "../components/BenefitsItem.jsx";
-import FlagCard from "../components/FlagCard.jsx";
-import PlanetFriendlyItem from "../components/PlanetFriendlyItem.jsx";
+import FeatureItem from "../components/home/FeatureItem.jsx";
+import BenefitsItem from "../components/home/BenefitsItem.jsx";
+import FlagCard from "../components/home/FlagCard.jsx";
+import PlanetFriendlyItem from "../components/home/PlanetFriendlyItem.jsx";
 import Footer from "../components/Footer.jsx";
 
 // Import images
@@ -94,7 +94,7 @@ export default function Welcome() {
 
             <HeaderSection
                 title="Générateur de QR code"
-                description="Ajoutez vos menus et rendez les accessibles par tous."
+                description="Ajoutez vos menus et rendez les accessibles facilement."
                 ctaText="Commencer"
                 qrLogo={qrLogo}
             />
@@ -170,7 +170,7 @@ export default function Welcome() {
                 </div>
 
                 <div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-center sm:w-8/12 lg:w-1/2 mx-auto pt-8">
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-center justify-items-center sm:w-8/12 lg:w-1/2 mx-auto pt-8">
                     {flags.map((flag, index) => (
                         <FlagCard key={index} flag={flag} className="col-span-1 mx-auto"/>
                     ))}

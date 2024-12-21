@@ -1,13 +1,45 @@
-import  { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+
+            fetch(`${import.meta.env.VITE_API_BASE_URL}/user`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data) {
+                        setUser(data);
+                    } else {
+                        console.error('No user data in response');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user:', error);
+                    localStorage.removeItem('token');
+                });
+        }
+    }, []);
+
     const login = async (credentials) => {
         try {
-            const response = await fetch('YOUR_API_URL/api/login', {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -28,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await fetch('YOUR_API_URL/api/logout', {
+            await fetch(`${import.meta.env.VITE_API_BASE_URL}/logout`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,

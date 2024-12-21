@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Si vous utilisez React Router
 import DropdownLink from './DropdownLink';
+import { useAuth } from '../contexts/AuthContext'; // Importation du AuthContext
 
 const DropdownMenu = ({ menuColorClass: initialMenuColorClass = 'menu-alt' }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [menuColorClass, setMenuColorClass] = useState(initialMenuColorClass);
+    const { user, logout } = useAuth();
+    const navigate = useNavigate(); // Hook pour redirection
 
     useEffect(() => {
         const handleScroll = () => {
@@ -22,15 +26,14 @@ const DropdownMenu = ({ menuColorClass: initialMenuColorClass = 'menu-alt' }) =>
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const refreshPage = () => {
-        setTimeout(() => {
-            window.location.reload();
-        }, 100);
-    };
-
-    // Simulation d'un utilisateur authentifié
-    const authUser = {
-        name: 'John Doe', // Remplace par null si non connecté
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            await logout(); // Appelle la méthode logout depuis AuthContext
+            navigate('/login'); // Redirige l'utilisateur vers la page de connexion
+        } catch (error) {
+            console.error('Erreur lors de la déconnexion:', error);
+        }
     };
 
     return (
@@ -44,88 +47,77 @@ const DropdownMenu = ({ menuColorClass: initialMenuColorClass = 'menu-alt' }) =>
 
             {isMenuOpen && (
                 <div className="dropdown-menu">
-                    {authUser ? (
+                    {user ? (
                         <>
-                            <DropdownLink href="/dashboard">
-                                Interface
-                            </DropdownLink>
-                            <DropdownLink href="/profile">
-                                Profil
-                            </DropdownLink>
+                            <DropdownLink href="/dashboard">Interface</DropdownLink>
+                            <DropdownLink href="/profile">Profil</DropdownLink>
                             <DropdownLink
                                 href="/logout"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    refreshPage();
-                                }}
+                                onClick={handleLogout}
                             >
                                 <span style={{ color: 'brown' }}>Se déconnecter</span>
                             </DropdownLink>
                         </>
                     ) : (
                         <>
-                            <DropdownLink href="/login">
-                                Se connecter
-                            </DropdownLink>
-                            <DropdownLink href="/register">
-                                S'inscrire
-                            </DropdownLink>
+                            <DropdownLink href="/login">Se connecter</DropdownLink>
+                            <DropdownLink href="/register">S'inscrire</DropdownLink>
                         </>
                     )}
                 </div>
             )}
 
-            <style jsx>{`
-        .dropdown {
-          position: fixed;
-          top: 30px;
-          right: 50px;
-          z-index: 1000;
-        }
+            <style>{`
+                .dropdown {
+                    position: fixed;
+                    top: 30px;
+                    right: 50px;
+                    z-index: 1000;
+                }
 
-        .dropdown-toggle {
-          font-family: 'Futura W01 Medium', sans-serif;
-          font-weight: bold;
-          border: none;
-          font-size: 1.2rem;
-          cursor: pointer;
-          border-radius: 5px;
-          padding: 10px 20px;
-          transition: background-color 0.3s, color 0.3s;
-        }
+                .dropdown-toggle {
+                    font-family: 'Futura W01 Medium', sans-serif;
+                    font-weight: bold;
+                    border: none;
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                    border-radius: 5px;
+                    padding: 10px 20px;
+                    transition: background-color 0.3s, color 0.3s;
+                }
 
-        .menu-default {
-          background-color: #000000;
-          color: #ffffff;
-        }
+                .menu-default {
+                    background-color: #000000;
+                    color: #ffffff;
+                }
 
-        .menu-alt {
-          background-color: #ffffff;
-          color: #000000;
-        }
+                .menu-alt {
+                    background-color: #ffffff;
+                    color: #000000;
+                }
 
-        .dropdown-menu {
-          position: absolute;
-          right: 0;
-          width: 200px;
-          background-color: white;
-          box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-          border-radius: 5px;
-          padding: 10px;
-        }
+                .dropdown-menu {
+                    position: absolute;
+                    right: 0;
+                    width: 200px;
+                    background-color: white;
+                    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+                    border-radius: 5px;
+                    padding: 10px;
+                }
 
-        .dropdown-menu a {
-          display: block;
-          padding: 10px;
-          text-decoration: none;
-          color: #333;
-          transition: background 0.3s;
-        }
+                .dropdown-menu a {
+                    display: block;
+                    padding: 10px;
+                    text-decoration: none;
+                    color: #333;
+                    transition: background 0.3s;
+                }
 
-        .dropdown-menu a:hover {
-          background-color: #f0f0f0;
-        }
-      `}</style>
+                .dropdown-menu a:hover {
+                    background-color: #f0f0f0;
+                }
+            `}</style>
         </div>
     );
 };
