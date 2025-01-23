@@ -40,7 +40,11 @@ const Navigation = ({ isActive }) => {
                 <div className='flex flex-col gap-2 mb-4'>
                     <p className=''>Vous modifiez actuellement :</p>
                     <p className="text-lg text-[#F9FFA8]">{nameRestaurant}</p>
-                    <a href="" className='text-[black] bg-[#F9FFA8] w-[50%] mx-auto rounded-lg hover:bg-black hover:text-white'>Changer</a>
+                    <a href="" className='text-[black] bg-[#F9FFA8] w-[50%] mx-auto rounded-lg hover:bg-black hover:text-white'
+                        onClick={() => {
+                            navigate('/restaurant')
+                        }}
+                    >Changer</a>
                 </div>
                 <p className="text-lg">Aimeric Hosef</p>
                 <p className="text-lg">aimeric.hosef@gmail.com</p>
