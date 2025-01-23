@@ -32,3 +32,20 @@ export const getCategoriesByRestaurantId = async (restaurantId) => {
             throw error;
         });
 };
+
+
+//Delete une categorie avec l'id
+export const deleteCategory = async (categoryId) => {
+    return axios.delete(import.meta.env.VITE_API_BASE_URL + '/categories/' + categoryId, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+        }
+    })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.error('Failed to delete category:', error);
+            throw error;
+        });
+};
