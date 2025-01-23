@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import Navigation from "../components/navigation/Navigation.jsx";
 import CardStat from "../components/statistique/CardStat.jsx";
-import axios from "axios";
 import { getRestaurants } from "../utils/data.js";
 
 
@@ -11,8 +10,10 @@ const Dashboard = () => {
     const { user } = useAuth();
 
     useEffect(() => {
-        let storedRestaurants = localStorage.getItem('restaurants');
+        let storedRestaurants = JSON.parse(localStorage.getItem('restaurants'));
+        let selectedRestaurant = JSON.parse(localStorage.getItem('selectedRestaurant'));
 
+        //Recupere la liste des restaurants de l'utilisateur
         const fetchRestaurants = async () => {
             if (!storedRestaurants) {
                 try {
@@ -24,6 +25,12 @@ const Dashboard = () => {
         }
 
         fetchRestaurants();
+
+        //Assigne par défaut le restaurant id 0 à l'utilisateur si aucun autre dans le local starage "selectedRestaurant"
+        if (!localStorage.getItem('selectedRestaurant')) {
+            selectedRestaurant = localStorage.setItem('selectedRestaurant', JSON.stringify(0));
+        }
+
     }, [])
 
 

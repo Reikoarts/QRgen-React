@@ -3,16 +3,28 @@ import { faTachometerAlt, faUser, faCartShopping, faSignOutAlt, faFolder, faFire
 import IconText from '../IconText';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useEffect } from 'react';
 
 const Navigation = ({ isActive }) => {
     const navigate = useNavigate()
     const { logout } = useAuth();
 
+    let storedRestaurants = JSON.parse(localStorage.getItem('restaurants'));
+    let selectedRestaurant = JSON.parse(localStorage.getItem('selectedRestaurant'));
+    let nameRestaurant = storedRestaurants[selectedRestaurant].name;
+
+    useEffect(() => {
+        if (storedRestaurants.length === 0 || selectedRestaurant.length === 0) {
+            navigate('/dashboard');
+        }
+    }, [])
+
+
     const handleLogout = async (e) => {
         e.preventDefault();
         try {
-            await logout(); // Appelle la méthode logout depuis AuthContext
-            navigate('/login'); // Redirige l'utilisateur vers la page de connexion
+            await logout();
+            navigate('/login');
         } catch (error) {
             console.error('Erreur lors de la déconnexion:', error);
         }
@@ -27,7 +39,7 @@ const Navigation = ({ isActive }) => {
             <div className="text-center mb-6">
                 <div className='flex flex-col gap-2 mb-4'>
                     <p className=''>Vous modifiez actuellement :</p>
-                    <p className="text-lg text-[#F9FFA8]">Le bg du 27 représente</p>
+                    <p className="text-lg text-[#F9FFA8]">{nameRestaurant}</p>
                     <a href="" className='text-[black] bg-[#F9FFA8] w-[50%] mx-auto rounded-lg hover:bg-black hover:text-white'>Changer</a>
                 </div>
                 <p className="text-lg">Aimeric Hosef</p>
