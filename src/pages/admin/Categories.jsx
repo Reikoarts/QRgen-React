@@ -3,6 +3,7 @@ import Navigation from '../../components/navigation/Navigation';
 import CategoryCard from '../../components/categories/CategoryCard';
 import { useState } from 'react';
 import { getCategoriesByRestaurantId } from '../../utils/data';
+import { deleteCategory } from '../../utils/data';
 
 const Categories = () => {
 
@@ -27,8 +28,13 @@ const Categories = () => {
 
     // Fonction pour gérer la suppression d'une catégorie
     const handleDelete = (id) => {
-        // Logique de suppression (ici on fait juste un log pour l'exemple)
-        console.log(`Suppression de la catégorie avec l'id: ${id}`);
+        deleteCategory(id)
+            .then(() => {
+                setCategories(categories.filter((category) => category.id !== id));
+            })
+            .catch((error) => {
+                console.error('Failed to delete category:', error);
+            });
     };
 
     // Fonction pour gérer la modification d'une catégorie
