@@ -3,10 +3,9 @@ import React from 'react'
 const CategoryCard = ({ category }) => {
     return (
         <div key={category.id} className="bg-gray-100 p-4 rounded-lg shadow-md hover:shadow-lg transition-all">
-            <img src={category.imageUrl} alt={category.name} className="w-full h-40 object-cover rounded-md" />
+            <img src={category.photo} alt={category.name} className="w-full h-40 object-cover rounded-md" />
             <div className="mt-4">
                 <h3 className="text-xl font-semibold">{category.name}</h3>
-                <p className="mt-2 text-sm text-gray-600">{category.description}</p>
                 <div className="mt-4 flex space-x-4">
                     <button
                         onClick={() => handleEdit(category.id)}

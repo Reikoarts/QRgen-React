@@ -28,7 +28,7 @@ const Restaurants = () => {
             <div className="bg-white p-6 rounded-lg">
                 <h1 className="text-2xl mb-6">Liste des restaurants</h1>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 overflow-y-auto">
                     {restaurants ? restaurants.map((restaurant) => (
                         <div
                             key={restaurant.id}

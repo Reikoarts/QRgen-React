@@ -15,3 +15,20 @@ export const getRestaurants = async () => {
             throw error;
         });
 };
+
+
+//Get les categories d'un restaurant avec le restaurant_id
+export const getCategoriesByRestaurantId = async (restaurantId) => {
+    return axios.get(import.meta.env.VITE_API_BASE_URL + '/categories?restaurant_id=' + restaurantId, {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+        }
+    })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.error('Failed to fetch categories:', error);
+            throw error;
+        });
+};
