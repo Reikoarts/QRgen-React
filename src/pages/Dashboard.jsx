@@ -8,10 +8,10 @@ import { getRestaurants } from "../utils/data.js";
 const Dashboard = () => {
 
     const { user } = useAuth();
+    let storedRestaurants = JSON.parse(localStorage.getItem('restaurants'));
+    let selectedRestaurant = localStorage.getItem('selectedRestaurant');
 
     useEffect(() => {
-        let storedRestaurants = JSON.parse(localStorage.getItem('restaurants'));
-        let selectedRestaurant = JSON.parse(localStorage.getItem('selectedRestaurant'));
 
         //Recupere la liste des restaurants de l'utilisateur
         const fetchRestaurants = async () => {
@@ -53,7 +53,7 @@ const Dashboard = () => {
 
     return (
         <div className="grid grid-cols-[300px,_1fr] gap-6 bg-gray-100 p-6 w-screen h-screen">
-            <Navigation isActive="dashboard" />
+            <Navigation isActive="dashboard" selectedRestaurant={selectedRestaurant} />
             <div className="bg-white p-6 rounded-lg">
                 <h1 className="text-2xl mb-6">Tableau de bord</h1>
 

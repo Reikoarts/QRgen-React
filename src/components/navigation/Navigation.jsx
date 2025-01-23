@@ -3,21 +3,18 @@ import { faTachometerAlt, faUser, faCartShopping, faSignOutAlt, faFolder, faFire
 import IconText from '../IconText';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-const Navigation = ({ isActive }) => {
+const Navigation = ({ isActive, selectedRestaurant }) => {
+    let storedRestaurants = JSON.parse(localStorage.getItem('restaurants'));
+    const [nameRestaurant, setNameRestaurant] = useState();
     const navigate = useNavigate()
     const { logout } = useAuth();
 
-    let storedRestaurants = JSON.parse(localStorage.getItem('restaurants'));
-    let selectedRestaurant = JSON.parse(localStorage.getItem('selectedRestaurant'));
-    let nameRestaurant = storedRestaurants[selectedRestaurant].name;
 
     useEffect(() => {
-        if (storedRestaurants.length === 0 || selectedRestaurant.length === 0) {
-            navigate('/dashboard');
-        }
-    }, [])
+        setNameRestaurant(storedRestaurants[selectedRestaurant].name);
+    }, [selectedRestaurant])
 
 
     const handleLogout = async (e) => {
@@ -39,7 +36,7 @@ const Navigation = ({ isActive }) => {
             <div className="text-center mb-6">
                 <div className='flex flex-col gap-2 mb-4'>
                     <p className=''>Vous modifiez actuellement :</p>
-                    <p className="text-lg text-[#F9FFA8]">{nameRestaurant}</p>
+                    <p className="text-lg text-[#F9FFA8]">{nameRestaurant ? nameRestaurant : "Chargement"}</p>
                     <a href="" className='text-[black] bg-[#F9FFA8] w-[50%] mx-auto rounded-lg hover:bg-black hover:text-white'
                         onClick={() => {
                             navigate('/restaurant')
