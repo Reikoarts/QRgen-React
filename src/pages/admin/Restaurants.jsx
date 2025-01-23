@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Restaurants = () => {
     const [selectedRestaurant, setSelectedRestaurant] = useState(localStorage.getItem('selectedRestaurant') ? localStorage.getItem('selectedRestaurant') : "");
+    const [changedRestaurant, setChangedRestaurant] = useState("");
     const navigate = useNavigate();
     const restaurants = JSON.parse(localStorage.getItem('restaurants'));
 
@@ -18,6 +19,7 @@ const Restaurants = () => {
         const selectedRestaurantIndex = restaurants.findIndex((restaurant) => restaurant.id === id);
         localStorage.setItem('selectedRestaurant', selectedRestaurantIndex);
         setSelectedRestaurant(selectedRestaurantIndex);
+        setChangedRestaurant(restaurants[selectedRestaurantIndex].name);
     };
 
     return (
@@ -38,6 +40,15 @@ const Restaurants = () => {
                         </div>
                     )) : <p>Chargement...</p>}
                 </div>
+
+                {changedRestaurant && (
+                    <div className="bg-green-200 p-4 rounded-lg mt-6">
+                        <p className="text-green-800">Restaurant modifié avec succès</p>
+                        <p className="text-green-800">Vous modifiez actuellement :</p>
+                        <p className="text-lg text-green-800">{changedRestaurant}</p>
+                    </div>
+                )}
+
             </div>
         </div>
     );
