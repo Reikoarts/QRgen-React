@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CategoryCard = ({ category }) => {
+const CategoryCard = ({ category, handleEdit, handleDelete }) => {
     return (
         <div key={category.id} className="bg-gray-100 p-4 rounded-lg shadow-md hover:shadow-lg transition-all">
             <img src={category.photo} alt={category.name} className="w-full h-40 object-cover rounded-md" />
