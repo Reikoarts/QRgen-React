@@ -38,7 +38,7 @@ const Restaurants = () => {
                             <h3 className="text-xl font-semibold">{restaurant.name}</h3>
                             <p className="text-sm text-gray-500">{restaurant.description}</p>
                         </div>
-                    )) : <p>Chargement...</p>}
+                    )) : <p>Chargement des données...</p>}
                 </div>
 
                 {changedRestaurant && (
